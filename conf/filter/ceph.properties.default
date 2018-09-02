@@ -1,0 +1,5 @@
+// 线下开发bucket、accessKey、secretKey是固定的
+bucket=test-bucket
+access_key=83YM37ECFMVEFPVHI367
+access_secret_key=lP7MuvQ7zxloMrF0GKPiUZSv5nvuQ20XprtNmM2M
+end_point=http://10.100.156.232:7480

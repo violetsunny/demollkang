@@ -1,0 +1,5 @@
+// 线下开发bucket、accessKey、secretKey是固定的
+bucket=tmc/flight
+access_key=OJ755U74KEVX9302WQZY
+access_secret_key=vJZPLy9Nf4pRAlrXDNGQOECNwRYiZcgCNyy2uV2C
+end_point=http://tcstore1.17usoft.com

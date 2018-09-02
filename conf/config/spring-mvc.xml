@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+   
+   <!-- 如果不配置映射器，适配器，页面视图解析器  将采用默认配置，来自于webmvc-web.servlet下的DispatcherServlet.properties -->
+   
+   <!-- 映射器 BeanNameUrlHandlerMapping以bean的name作为url一部分来查询对应的handlerMapping-->
+   <bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
+   <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+	 		<!-- 可以配置多个url 可以对url做统一管理
+	 		 -->
+	 		 <property name="mappings">
+	 		 		<props>
+	 		 		    <!-- key:url 
+	 		 		         value:是bean对象的id值
+	 		 		    -->
+	 		 			<prop key="/queryAllGame2.action">gameController</prop>
+	 		 			<prop key="/queryAllGame3.action">gameController</prop>
+	 		 			<prop key="/queryAllGame4.action">gameController</prop>
+	 		 		</props>
+	 		 </property>
+	</bean>
+   <!-- 适配器 -->
+   <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/>
+   <bean class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter"/>
+   <!-- 页面视图解析器 -->
+   <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"/>
+   <!-- 截取请求映射对应控制器 -->
+   <bean name="/queryAllGame.action" class="com.njwb.controller.GameController"/>
+</beans>           

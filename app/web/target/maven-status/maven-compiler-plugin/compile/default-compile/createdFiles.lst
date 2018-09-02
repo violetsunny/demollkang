@@ -1,0 +1,6 @@
+com\tc\flight\tmc\web\controller\IndexController.class
+com\tc\flight\tmc\web\controller\model\FileDTO.class
+com\tc\flight\tmc\web\controller\model\ResultMsg.class
+com\tc\flight\tmc\web\controller\CommonController.class
+com\tc\flight\tmc\web\controller\utils\ContextUtils.class
+com\tc\flight\tmc\web\controller\security\TMCUserDetails.class

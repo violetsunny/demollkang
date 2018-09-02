@@ -1,0 +1,4 @@
+dsf.service.config.registryhost=t.dsf2.17usoft.com
+dsf.service.config.env=stage
+dsf.service.config.targetenv=stage
+dsf.service.config.name=flight.tmc.opplatform

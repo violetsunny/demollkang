@@ -1,0 +1,4 @@
+dsf.service.config.registryhost=qa.dsf2.17usoft.com
+dsf.service.config.env=test
+dsf.service.config.targetenv=test
+dsf.service.config.name=flight.tmc.opplatform

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <!-- 
+       spring在加载时，检查base-package,将com.njwb包及其子包下的
+                 类中，如果使用了spring的相关注解，都会解析成一个javabean(相当于原来的bean标签的配置)
+     -->
+    <context:component-scan base-package="com.njwb"/>
+    
+    <aop:config>
+        <!-- 切面 -->
+   		<aop:aspect id="aspect" ref="humanHelperNEW">
+   		     <!-- 切点 -->
+   		     <!-- 
+   		               关心的连接点  在Human类中的以sleep打头的所有方法
+   		      -->
+   		     <aop:pointcut expression="execution(* com.njwb.service.impl.Human.sleep*(..))" id="pointCut"/>
+   		     <!-- 增强 -->
+   		     <aop:before method="beforeSleep" pointcut-ref="pointCut"/>
+   		     <aop:after-returning method="wakeUp" pointcut-ref="pointCut"/>
+   		     
+   		</aop:aspect>
+   </aop:config>
+</beans>           

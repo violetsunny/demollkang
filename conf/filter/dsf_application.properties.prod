@@ -1,0 +1,4 @@
+dsf.service.config.registryhost=dsf2.17usoft.com
+dsf.service.config.env=product
+dsf.service.config.targetenv=product
+dsf.service.config.name=flight.tmc.opplatform
