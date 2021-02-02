@@ -2,15 +2,22 @@ package com.github.demo.llkang.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.Calendar;
 import java.util.Date;
 
-import com.ly.sof.utils.common.DateUtil;
 
 /**
  *
  *
- * @author kllp0648
+ * @author kll
  * @version $Id: DateFormat.java, v 0.1 2017年2月8日 下午7:08:43 kllp0648 Exp $
  */
 public class DateFormat {
@@ -127,51 +134,6 @@ public class DateFormat {
         return date + " " + time + ":00";
     }
 
-    /**
-     * 生成订单使用的出发或到达日期(PlanBeginDate,setPlanEndDate)
-     *
-     * @param date 乘客选择日期(yyyy-MM-dd)
-     * @param time 航班起飞或到达时间(HH:mm)
-     * @return yyyy-MM-dd HH:mm:ss
-     */
-    public static Date genPlanDate(String date, String time) {
-        try {
-            return DateUtil.parseDateNoTime(date + " " + time + ":00", "yyyy-MM-dd HH:mm:ss");
-        } catch (ParseException e) {
-            return null;
-        }
-    }
-
-    /**
-     * 生成带星期的日期，航班订单信息确认页使用
-     *
-     * @param date 乘客所选日期String(yyyy-MM-dd)
-     * @return yyyy-MM-dd （EEEE）
-     */
-    public static String convert(String date) {
-        if (null == date) {
-            return "";
-        }
-        try {
-            return DateUtil.format(DateUtil.parseDateNoTime(date, "yyyy-MM-dd"), "yyyy-MM-dd （EEEE）");
-        } catch (ParseException e) {
-            return "";
-        }
-    }
-
-    /**
-     * 生成FlightOrderVO使用的出发或到达时间
-     *
-     * @param time 时间(HH:mm)
-     * @return 时间(HH:mm)
-     */
-    public static Date genOrderTime(String time) {
-        try {
-            return DateUtil.parseDateNoTime(time, "HH:mm");
-        } catch (ParseException e) {
-            return null;
-        }
-    }
 
     /**
      * 通过时间秒毫秒数判断两个时间的间隔
@@ -313,5 +275,44 @@ public class DateFormat {
         calendar.add(field, amount);
         date = calendar.getTime();
         return date;
+    }
+
+
+    public static Date asDate(LocalDate localDate) {
+        return Date.from(localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    public static Date asDate(LocalDateTime localDateTime) {
+        return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    public static LocalDate asLocalDate(Date date) {
+        return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+    }
+
+    public static LocalDateTime asLocalDateTime(Date date) {
+        return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime();
+    }
+
+    public static LocalDate asLocalDate(String str, String format) {
+        return LocalDate.parse(str, DateTimeFormatter.ofPattern(format));
+    }
+
+    public static LocalDateTime asLocalDateTime(String str, String format) {
+        return LocalDateTime.parse(str, DateTimeFormatter.ofPattern(format));
+    }
+
+    public static Long getSecondsByDuration(){
+        return Duration.between(LocalDateTime.now(),LocalDateTime.of(LocalDate.now(), LocalTime.MAX).with(TemporalAdjusters.lastDayOfMonth())).getSeconds();
+    }
+
+    //判断时间是否在本月之内
+    public static boolean isInThisMonth(LocalDateTime time) {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String localDateString = time.format(dateTimeFormatter);
+        LocalDate localDate = LocalDate.parse(localDateString, dateTimeFormatter);
+        LocalDate now = LocalDate.now();
+        return (localDate.isBefore(now.with(TemporalAdjusters.lastDayOfMonth())) && localDate.isAfter(now.with(TemporalAdjusters.firstDayOfMonth())))
+                || localDate.isEqual(now.with(TemporalAdjusters.lastDayOfMonth())) || localDate.isEqual(now.with(TemporalAdjusters.firstDayOfMonth()));
     }
 }
